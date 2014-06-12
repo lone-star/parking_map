@@ -1,12 +1,14 @@
 var gulp = require('gulp');
 
 var concat = require('gulp-concat');
+// TODO: remove
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
 var rename = require('gulp-rename');
-var browserify = require('gulp-browserify');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
 
 var rimraf = require('rimraf');
 
@@ -52,10 +54,9 @@ gulp.task('vendor-styles', function(){
 });
 
 gulp.task('scripts', function() {
-  return gulp.src('app/src/app.js')
-    .pipe(browserify())
-//    .pipe(uglify())
-    .pipe(rename('app.min.js'))
+  return browserify('./app/src/app.js')
+    .bundle()
+    .pipe(source('app.min.js'))
     .pipe(gulp.dest('build/js'));
 });
 
