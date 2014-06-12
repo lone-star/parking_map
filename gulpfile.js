@@ -1,26 +1,22 @@
 var gulp = require('gulp');
 
 var concat = require('gulp-concat');
-// TODO: remove
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
 var rename = require('gulp-rename');
+
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 
 var rimraf = require('rimraf');
-
 var server = require('./server');
 
 var paths = {
   scripts: ['app/**/*.js'],
   lessEndPoint: ['app/styles/app.less'],
-  lessFiles: ['app/**/*.less'],
-
-  vendorScripts: ['vendors/**/*.js'],
-  vendorStyles: ['vendors/**/*.css']
+  lessFiles: ['app/**/*.less']
 };
 
 gulp.task('clean-app', function(cb){
@@ -38,19 +34,6 @@ gulp.task('lint', function(){
   return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
-});
-
-gulp.task('vendor-scripts', function(){
-  return gulp.src(paths.vendorScripts)
-    .pipe(concat('vendors.min.js'))
-    .pipe(gulp.dest('build/js'));
-});
-
-gulp.task('vendor-styles', function(){
-  return gulp.src(paths.vendorStyles)
-    .pipe(concat('vendors.min.css'))
-    .pipe(minifyCSS())
-    .pipe(gulp.dest('build/css'));
 });
 
 gulp.task('scripts', function() {
@@ -80,10 +63,6 @@ gulp.task('default', [
           // app code
           'scripts',
           'styles',
-
-          // vendors code
-          'vendor-scripts',
-          'vendor-styles',
 
           'server',
           'watch'

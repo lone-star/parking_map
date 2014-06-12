@@ -1,9 +1,15 @@
-var map = require('./test');
+var $ = require('jquery');
+var Backbone = require('backbone');
+Backbone.$ = $;
 
-L.Icon.Default.imagePath = '/static/images';
 
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-
-L.marker([51.505, -0.09]).addTo(map).bindPopup('A pretty CSS3 popup. <br> Easily customizable.').openPopup();
+$(function() {
+  function initialize() {
+    var mapOptions = {
+      center: new google.maps.LatLng(-34.397, 150.644),
+      zoom: 8
+    };
+    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+});

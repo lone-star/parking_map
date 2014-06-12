@@ -7,7 +7,9 @@
     "test": "gulp test"
   },
   "depenencies": {
-    "express": "~4.4.2"
+    "express": "~4.4.2",
+    "backbone": "~1.1.2",
+    "jquery": "~2.1.1"
   },
   "devDependencies": {
     "gulp": "~3.8.0",
