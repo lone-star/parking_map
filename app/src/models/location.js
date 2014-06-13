@@ -1,4 +1,5 @@
 var Backbone = require('backbone');
+var _ = require('underscore');
 
 /*
  * A location is a place where a car can park
@@ -30,6 +31,17 @@ var LocationCollection = Backbone.Collection.extend({
       },
       reset: true
     });
+  },
+
+  parse: function(response) {
+    // save search coodinates
+    this.coordinates = response.coords;
+
+    return response.data;
+  },
+
+  getCoordinates: function() {
+    return this.coordinates;
   },
 
   select: function() {}

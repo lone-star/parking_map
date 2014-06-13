@@ -20,6 +20,49 @@ var MapView = Backbone.View.extend({
 
     // FIXME: not clean
     this.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+    this.collection.on('reset', this.render, this);
+  },
+  render: function() {
+    var bounds = new google.maps.LatLngBounds();
+
+    this.renderLocations(bounds);
+    this.renderSearch(bounds);
+
+    this.map.fitBounds(bounds);
+  },
+
+  renderLocations: function(bounds) {
+    // TODO: destroy existing markers
+    this.markers = [];
+
+    this.collection.each(function(location) {
+      var latLng = new google.maps.LatLng(location.get('coords').lat, location.get('coords').lng);
+
+      this.markers.push(new google.maps.Marker({
+        position: latLng,
+        animation: google.maps.Animation.DROP,
+        map: this.map,
+        icon: '/static/img/map-marker.png' // TODO: put somewhere else
+      }));
+
+      bounds.extend(latLng);
+    }, this);
+  },
+
+  renderSearch: function(bounds) {
+    var searchCoords = this.collection.getCoordinates();
+    var searchLatLng = new google.maps.LatLng(searchCoords.lat, searchCoords.lng);
+
+    // TODO: destroy previous search marker
+    this.searchMarker = new google.maps.Marker({
+      position: searchLatLng,
+      animation: google.maps.Animation.DROP,
+      map: this.map,
+      icon: '/static/img/current-location.png' // TODO: put somewhere else
+    });
+
+    bounds.extend(searchLatLng);
   }
 });
 
