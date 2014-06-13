@@ -1,5 +1,4 @@
 var Backbone = require('backbone');
-var _ = require('underscore');
 
 /*
  * A location is a place where a car can park

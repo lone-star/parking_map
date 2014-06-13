@@ -1,4 +1,5 @@
 var Backbone = require('backbone');
+var _ = require('underscore');
 
 /*
  * The map view serves several purposes:
@@ -15,7 +16,13 @@ var MapView = Backbone.View.extend({
 
     var mapOptions = {
       center: new google.maps.LatLng(center.lat, center.lng),
-      zoom: options.defaultParameters.zoom
+      zoom: options.defaultParameters.zoom,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.LEFT_CENTER
+      },
+      mapTypeControl: false,
+      streetViewControl: false,
+      panControl: false
     };
 
     // FIXME: not clean
@@ -33,7 +40,11 @@ var MapView = Backbone.View.extend({
   },
 
   renderLocations: function(bounds) {
-    // TODO: destroy existing markers
+    if (this.markers && this.markers.length > 0) {
+      _.each(this.markers, function(marker) {
+        marker.setMap(null);
+      });
+    }
     this.markers = [];
 
     this.collection.each(function(location) {
@@ -54,7 +65,10 @@ var MapView = Backbone.View.extend({
     var searchCoords = this.collection.getCoordinates();
     var searchLatLng = new google.maps.LatLng(searchCoords.lat, searchCoords.lng);
 
-    // TODO: destroy previous search marker
+    if (typeof this.searchMarker !== 'undefined') {
+      this.searchMarker.setMap(null);
+    }
+
     this.searchMarker = new google.maps.Marker({
       position: searchLatLng,
       animation: google.maps.Animation.DROP,
