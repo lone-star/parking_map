@@ -8,7 +8,7 @@ var _ = require('underscore');
  * user is performing a search
  */
 var SearchView = Backbone.View.extend({
-  id: 'search',
+  el: '#search',
 
   initialize: function() {
     this.autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-text'));
@@ -19,7 +19,6 @@ var SearchView = Backbone.View.extend({
 
   newSearch: function() {
     var place = this.autocomplete.getPlace();
-    console.log(place);
     this.collection.search(place.formatted_address || place.name);
   }
 });

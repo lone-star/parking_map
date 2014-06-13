@@ -1,4 +1,5 @@
 var Backbone = require('backbone');
+var _ = require('underscore');
 
 /*
  * A location is a place where a car can park
@@ -43,7 +44,17 @@ var LocationCollection = Backbone.Collection.extend({
     return this.coordinates;
   },
 
-  select: function() {}
+  select: function(location) {
+    if (this.selected === location) {
+      return;
+    }
+    this.selected = location;
+    this.trigger('locationSelected', location);
+  },
+
+  selectEvent: function(location) {
+    return _.bind(_.partial(this.select, location), this);
+  }
 });
 
 

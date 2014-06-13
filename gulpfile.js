@@ -12,9 +12,10 @@ var source = require('vinyl-source-stream');
 
 var rimraf = require('rimraf');
 var server = require('./server');
+var handlebars = require('./libs/handlebars_assets.js');
 
 var paths = {
-  scripts: ['app/**/*.js'],
+  scripts: ['app/**/*.js', 'app/**/*.handlebars'],
   lessEndPoint: ['app/styles/app.less'],
   lessFiles: ['app/**/*.less']
 };
@@ -38,6 +39,7 @@ gulp.task('lint', function(){
 
 gulp.task('scripts', function() {
   return browserify('./app/src/app.js')
+    .transform({global: false}, handlebars)
     .bundle()
     .pipe(source('app.min.js'))
     .pipe(gulp.dest('build/js'));

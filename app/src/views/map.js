@@ -47,15 +47,20 @@ var MapView = Backbone.View.extend({
     }
     this.markers = [];
 
+    var marker;
+
     this.collection.each(function(location) {
       var latLng = new google.maps.LatLng(location.get('coords').lat, location.get('coords').lng);
-
-      this.markers.push(new google.maps.Marker({
+      marker = new google.maps.Marker({
         position: latLng,
         animation: google.maps.Animation.DROP,
         map: this.map,
         icon: '/static/img/map-marker.png' // TODO: put somewhere else
-      }));
+      });
+
+      this.markers.push(marker);
+
+      google.maps.event.addListener(marker, 'click', this.collection.selectEvent(location));
 
       bounds.extend(latLng);
     }, this);
