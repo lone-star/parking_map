@@ -9,7 +9,6 @@ var details = require('./views/details');
 var map = require('./views/map');
 var search = require('./views/search');
 
-
 $(function() {
 
   // initialize collection
@@ -34,4 +33,6 @@ $(function() {
       zoom: 12
     }
   });
+
+  locationCollection.search('wembley');
 });

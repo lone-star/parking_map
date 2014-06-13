@@ -17,8 +17,21 @@ var LocationModel = Backbone.Model.extend({});
  * the data
  */
 var LocationCollection = Backbone.Collection.extend({
+
   model: LocationModel,
-  search: function() {},
+
+  url: '/api',
+
+  search: function(searchQuery) {
+    this.fetch({
+      dataType: 'json',
+      data: {
+        q: searchQuery
+      },
+      reset: true
+    });
+  },
+
   select: function() {}
 });
 
