@@ -16,7 +16,7 @@ var handlebars = require('./libs/handlebars_assets.js');
 
 var paths = {
   scripts: ['app/**/*.js'],
-  templates: ['app/**/*.handlebars'],
+  templates: ['app/**/*.hbs'],
   lessEndPoint: ['app/styles/app.less'],
   lessFiles: ['app/**/*.less']
 };
@@ -60,16 +60,7 @@ gulp.task('watch', function() {
 
 gulp.task('server', server.start);
 
-gulp.task('default', [
-          'clean-build',
-
-          // app code
-          'scripts',
-          'styles',
-
-          'server',
-          'watch'
-]);
+gulp.task('default', ['clean-build', 'scripts', 'styles', 'server', 'watch']);
 
 
 

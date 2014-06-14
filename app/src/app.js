@@ -1,6 +1,8 @@
 var $ = require('jquery');
 var Backbone = require('backbone');
 
+require('./helpers');
+
 // we need to hook Backbone with jquery
 Backbone.$ = $;
 

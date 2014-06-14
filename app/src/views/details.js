@@ -10,7 +10,7 @@ var DetailsView = Backbone.View.extend({
 
   el: '#details-pannel',
 
-  template: require('./details.handlebars'),
+  template: require('./details.hbs'),
 
   events: {
     "click .js-close": 'close'

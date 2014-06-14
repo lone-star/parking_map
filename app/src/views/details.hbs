@@ -1,0 +1,39 @@
+<div class="heading section">
+  <div class="feedback table pull-left">
+    <div class="rating table-cell">{{feedback.rating}}/5</div>
+    <span class="rating-count table-cell">based on {{feedback.count}} reviews</span>
+  </div>
+
+  <div class="price-container table pull-right">
+    <span class="price table-cell">{{display_price.formatted_price}}</span>
+    <span class="period table-cell">per {{display_price.period}}</span>
+  </div>
+</div>
+
+<h4 class="title section">{{title}} ({{spaces_to_rent}} spaces)</h4>
+<div class="container">
+  <h5>Information:</h5>
+  <ul class="listing">
+    <li>{{category}}</li>
+    <li>{{spaces_to_rent}} spaces</li>
+    <li>{{round_distance distance.mile}} miles from destination
+  ({{round_distance distance.km}} km)</li>
+
+    {{#each facilities}}
+      <li>{{this}}</li>
+    {{/each}}
+
+  </ul>
+  <h5>Photos:</h5>
+
+  {{#if photos.user_added}}
+    <img class="location-photo" src="{{photo_url photos.user_added}}"></img>
+  {{else}}
+    <img class="location-photo" src="{{photos.google_streetview}}"></img>
+  {{/if}}
+
+</div>
+
+<div class="close-container">
+  <a class="close-btn js-close" href="">Close</a>
+</div>

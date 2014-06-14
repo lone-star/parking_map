@@ -2,5 +2,9 @@
   "images": {
     "marker": "/static/img/map-marker.png",
     "location": "/static/img/current-location.png"
+  },
+  "api_root": "https://api.parkatmyhouse.com",
+  "screen": {
+    "mobile_max": 480
   }
 }
