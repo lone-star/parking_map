@@ -1,0 +1,6 @@
+{
+  "images": {
+    "marker": "/static/img/map-marker.png",
+    "location": "/static/img/current-location.png"
+  }
+}

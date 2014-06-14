@@ -1,6 +1,8 @@
 var Backbone = require('backbone');
 var _ = require('underscore');
 
+var settings = require('../settings.json');
+
 /*
  * The map view serves several purposes:
  *    -display markers
@@ -27,8 +29,7 @@ var MapView = Backbone.View.extend({
       panControl: false
     };
 
-    // FIXME: not clean
-    this.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+    this.map = new google.maps.Map(this.el, mapOptions);
 
     this.directionsDisplay = new google.maps.DirectionsRenderer();
     this.directionsService = new google.maps.DirectionsService();
@@ -72,7 +73,7 @@ var MapView = Backbone.View.extend({
         position: latLng,
         animation: google.maps.Animation.DROP,
         map: this.map,
-        icon: '/static/img/map-marker.png' // TODO: put somewhere else
+        icon: settings.images.marker
       });
 
       this.markers.push(marker);
@@ -95,7 +96,7 @@ var MapView = Backbone.View.extend({
       position: searchLatLng,
       animation: google.maps.Animation.DROP,
       map: this.map,
-      icon: '/static/img/current-location.png' // TODO: put somewhere else
+      icon: settings.images.location
     });
 
     bounds.extend(searchLatLng);

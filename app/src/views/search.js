@@ -11,7 +11,7 @@ var SearchView = Backbone.View.extend({
   el: '#search',
 
   initialize: function() {
-    this.autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-text'));
+    this.autocomplete = new google.maps.places.Autocomplete(this.$('#search-text')[0]);
 
     google.maps.event.addListener(this.autocomplete, 'place_changed',
                                   _.bind(this.newSearch, this));

@@ -20,8 +20,8 @@ app.get('/api', function(req, res) {
   }, function(resp) {
     resp.pipe(res);
   }).on("error", function(e) {
-    // TODO: handle error
-    console.log("Got error: " + e.message);
+    console.error("Got error: " + e.message);
+    res.send(404);
   });
 });
 

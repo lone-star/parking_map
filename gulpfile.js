@@ -15,7 +15,8 @@ var server = require('./server');
 var handlebars = require('./libs/handlebars_assets.js');
 
 var paths = {
-  scripts: ['app/**/*.js', 'app/**/*.handlebars'],
+  scripts: ['app/**/*.js'],
+  templates: ['app/**/*.handlebars'],
   lessEndPoint: ['app/styles/app.less'],
   lessFiles: ['app/**/*.less']
 };
@@ -54,7 +55,7 @@ gulp.task('styles', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.scripts.concat(paths.lessFiles), ['lint', 'scripts', 'styles']);
+  gulp.watch(paths.scripts.concat(paths.lessFiles).concat(paths.templates), ['lint', 'scripts', 'styles']);
 });
 
 gulp.task('server', server.start);
