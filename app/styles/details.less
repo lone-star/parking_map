@@ -1,20 +1,41 @@
+
+
 #details-pannel {
   position: absolute;
-  top: 0px;
-  right: -50%;
-  width: 40%;
-  height: 100%;
   padding: 12px;
   background-color: rgba(248, 249, 250, 1);
   box-shadow: 8px 8px 16px #888888;
-  border-style: solid none solid solid;
   border-width: 1px;
   border-color: #B9B9B9;
   transition: 1s;
 
+  @media @screen-lg, @screen-md {
+    top: 0px;
+    right: -50%;
+    width: 40%;
+    height: 100%;
+    border-style: solid none solid solid;
+  }
+
+  @media @screen-sm {
+    box-sizing: border-box;
+    top: -100%;
+    width: 100%;
+    height: 50%;
+    z-index: 2;
+    border-style: none none none none;
+  }
+
   &.visible {
     transition: 1s;
-    right: 0;
+
+    @media @screen-lg, @screen-md {
+      right: 0;
+    }
+
+    @media @screen-sm {
+      top: 0%;
+    }
   }
 
   .close-btn {

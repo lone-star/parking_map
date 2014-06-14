@@ -3,6 +3,12 @@
   width: 100%;
 
   &.small {
-    width: 60%;
+    @media @screen-lg, @screen-md {
+      width: 60%;
+    }
+    @media @screen-sm {
+      height: 50%;
+      top: 50%;
+    }
   }
 }
