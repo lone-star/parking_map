@@ -4,7 +4,19 @@ var _ = require('underscore');
 /*
  * A location is a place where a car can park
  */
-var LocationModel = Backbone.Model.extend({});
+var LocationModel = Backbone.Model.extend({
+  getCoordinatesString: function() {
+    return this.lat() + ',' + this.lng();
+  },
+
+  lat: function() {
+    return this.get('coords').lat;
+  },
+
+  lng: function() {
+    return this.get('coords').lng;
+  }
+});
 
 /*
  * In addition to the base Backbone.Collection methods, the LocationCollection
@@ -42,6 +54,10 @@ var LocationCollection = Backbone.Collection.extend({
 
   getCoordinates: function() {
     return this.coordinates;
+  },
+
+  getCoordinatesString: function() {
+    return this.coordinates.lat + ',' + this.coordinates.lng;
   },
 
   select: function(location) {

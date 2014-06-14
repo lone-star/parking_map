@@ -21,7 +21,7 @@ var DetailsView = Backbone.View.extend({
   },
 
   showPannel: function(location) {
-    if (typeof location === 'undefined') {
+    if (!location) {
       return;
     }
     this.render(location);
@@ -36,7 +36,7 @@ var DetailsView = Backbone.View.extend({
     e.preventDefault();
     this.$el.removeClass('visible');
 
-    // TODO: set no marker with timeout 1s
+    this.collection.select(null);
   }
 });
 

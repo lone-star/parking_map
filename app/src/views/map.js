@@ -10,6 +10,8 @@ var _ = require('underscore');
  * It interacts mostly with the Google Maps canevas
  */
 var MapView = Backbone.View.extend({
+  el: '#map-canvas',
+
   initialize: function(options) {
 
     var center = options.defaultParameters.center;
@@ -28,8 +30,23 @@ var MapView = Backbone.View.extend({
     // FIXME: not clean
     this.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
+    this.directionsDisplay = new google.maps.DirectionsRenderer();
+    this.directionsService = new google.maps.DirectionsService();
+
     this.collection.on('reset', this.render, this);
+    this.collection.on('locationSelected', function(location) {
+
+      if (this.isLargeMode) {
+        _.delay(_.bind(this.showRoute, this, location), 1000);
+      } else {
+        this.showRoute.apply(this, arguments);
+      }
+
+    }, this);
+
+    this.isLargeMode = true;
   },
+
   render: function() {
     var bounds = new google.maps.LatLngBounds();
 
@@ -50,7 +67,7 @@ var MapView = Backbone.View.extend({
     var marker;
 
     this.collection.each(function(location) {
-      var latLng = new google.maps.LatLng(location.get('coords').lat, location.get('coords').lng);
+      var latLng = new google.maps.LatLng(location.lat(), location.lng());
       marker = new google.maps.Marker({
         position: latLng,
         animation: google.maps.Animation.DROP,
@@ -82,6 +99,46 @@ var MapView = Backbone.View.extend({
     });
 
     bounds.extend(searchLatLng);
+  },
+
+  showRoute: function(location) {
+    if (!location) {
+      this.directionsDisplay.setMap(null);
+      this.expand();
+      return;
+    }
+    this.directionsDisplay.setMap(this.map);
+
+    var request = {
+      origin: location.getCoordinatesString(),
+      destination: this.collection.getCoordinatesString(),
+      travelMode: google.maps.TravelMode.WALKING
+    };
+    this.directionsService.route(request, _.bind(function(result, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        this.directionsDisplay.setDirections(result);
+      }
+    }, this));
+
+    this.shrink();
+  },
+
+  shrink: function() {
+    if (!this.isLargeMode) {
+      return;
+    }
+    this.isLargeMode = false;
+    this.$el.addClass('small');
+    google.maps.event.trigger(this.map, "resize");
+  },
+
+  expand: function() {
+    if (this.isLargeMode) {
+      return;
+    }
+    this.isLargeMode = true;
+    this.$el.removeClass('small');
+    google.maps.event.trigger(this.map, "resize");
   }
 });
 

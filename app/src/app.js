@@ -33,5 +33,6 @@ $(function() {
       zoom: 12
     }
   });
+  locationCollection.search('wembley');
 
 });
