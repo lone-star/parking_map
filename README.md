@@ -49,13 +49,26 @@ A script watches modifications on js, less or hbs files. On every modification, 
 
 # The Client Application
 
-The client application consists of 4 modules:
-- LocationsCollection
+The client application is built with Backbone.js, it consists of 4 modules:
+
+- LocationCollection
 - SearchView
 - MapView
 - DetailsView
 
+## LocationCollection
 
+The LocationCollection searches for parking locations according to a query string. It also keep the state of the application by enabling the selection of a location. When a location is selected, it triggers a event to update its observers.
 
+## SearchView
 
+The SearchView takes in searches from the UI. It offers autocomplete via the Google Maps Autocomplete service. Its sends the search queries to the LocationCollection.
 
+## MapView
+
+The MapView will handle all operations related to the map. It listens for `reset` and `locationSelected` events on the LocationCollection.
+On receiving a `reset` event, it updates the list of markers on the map. When a `locationSelected` event occurs, it displays the path from the selected location to the searched location.
+
+## DetailsView
+
+The DetailsView displays all the information relative to the currently selected location. When the LocationCollection triggers a `locationSelected` event, it will update the DOM with the newly selected location.
