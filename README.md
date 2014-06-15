@@ -1,4 +1,4 @@
-parking_map
+Parking Map
 ===========
 
 Find parking spots on a map
