@@ -62,7 +62,3 @@ gulp.task('server', server.start);
 
 gulp.task('default', ['clean-build', 'scripts', 'styles', 'server', 'watch']);
 
-
-
-
-

@@ -5,6 +5,7 @@ var _ = require('underscore');
  * A location is a place where a car can park
  */
 var LocationModel = Backbone.Model.extend({
+
   getCoordinatesString: function() {
     return this.lat() + ',' + this.lng();
   },
@@ -20,11 +21,14 @@ var LocationModel = Backbone.Model.extend({
 
 /*
  * In addition to the base Backbone.Collection methods, the LocationCollection
- * will provide two specialized methods:
+ * will provide two main features:
+ *
  *
  *    -search: perform a search on a given query
+ *
  *    -select: sets a location as selected, and triggers a "locationSelected"
- *    event
+ *    event.
+ *    When selecting `null`, it means nothing is being selected
  *
  * The collection holds the current state of the application in addition to
  * the data
@@ -33,6 +37,7 @@ var LocationCollection = Backbone.Collection.extend({
 
   model: LocationModel,
 
+  // This is the URL for our proxy server
   url: '/api',
 
   search: function(searchQuery) {
@@ -46,9 +51,7 @@ var LocationCollection = Backbone.Collection.extend({
   },
 
   parse: function(response) {
-    // save search coodinates
     this.coordinates = response.coords;
-
     return response.data;
   },
 
@@ -68,6 +71,7 @@ var LocationCollection = Backbone.Collection.extend({
     this.trigger('locationSelected', location);
   },
 
+  // Wrapper for `this.select`
   selectEvent: function(location) {
     return _.bind(_.partial(this.select, location), this);
   }

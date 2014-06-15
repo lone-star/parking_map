@@ -3,8 +3,10 @@ var _ = require('underscore');
 var $ = require('jquery');
 
 /*
- * The details view will show detailed information about the currently selected
- * marker. If no marker is selected, it will not be visible.
+ * The DisplayView listens to the events `locationSelected` on `this.collection`,
+ * and will display the selected location.
+ *
+ * If the user closes the pannel, it will set the selected location to `null`
  */
 var DetailsView = Backbone.View.extend({
 

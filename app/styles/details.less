@@ -1,14 +1,36 @@
+/* variables */
+
+/* color for paragraph text */
 @text-color: #6F6F6F;
+
+/* height for pannel heading */
 @heading-height: 60px;
+
+/* height for h4 tags */
 @title-line-height: 17px;
 
+/* height for close button */
+@close-btn-line-height: 15px;
+
+/* spacing between cells in table */
+@table-spacing: 8px;
+
+/* top, right, bottom, left margin in details pannel */
 @lg-container-margin: 12px;
 @sm-container-margin: 8px;
 
+/* top|bottom margin between pannel sections */
 @lg-section-margin: 20px;
 @sm-section-margin: 8px;
 
-@close-btn-line-height: 15px;
+/* mixins */
+
+.small-text {
+  font-size: 12px;
+  color: @text-color;
+}
+
+/* titles|subtitles|other components */
 
 h4 {
   color: darken(@text-color, 30%);
@@ -35,6 +57,37 @@ h5 {
   margin: 4px 0px 4px 0px;
 }
 
+.table {
+  height: 100%;
+  display: table;
+  border-spacing: @table-spacing;
+
+  .table-cell {
+    display: table-cell;
+    vertical-align: middle;
+
+    /* we don't want additional spacing on first or last cell */
+
+    &:first-child {
+      margin-left: -@table-spacing;
+    }
+
+    &:last-child {
+      margin-right: -@table-spacing;
+    }
+  }
+}
+
+.pull-right {
+  float: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+
+/* the pannel is divided in sections */
 .section {
   border-bottom: 1px solid rgba(100, 166, 236, 0.1);
   margin-bottom: 0px;
@@ -48,12 +101,6 @@ h5 {
   }
 }
 
-
-.small-text {
-  font-size: 12px;
-  color: @text-color;
-}
-
 #details-pannel {
   position: absolute;
   background-color: rgba(248, 249, 250, 1);
@@ -61,6 +108,11 @@ h5 {
   border-width: 1px;
   border-color: #B9B9B9;
   transition: 1s;
+
+  /*
+    On desktop and tablets, the pannel will slide from the right.
+    On mobile phones, it will slide from the top
+   */
 
   @media @screen-lg, @screen-md {
     top: 0px;
@@ -93,64 +145,42 @@ h5 {
     }
   }
 
+  /* the heading displays the grade and the price of a location */
   .heading {
     height: @heading-height;
-  }
 
-  .close-container {
-    position: absolute;
-    z-index: 3;
-    width: 100%;
-    height: @close-btn-line-height;
-
-    .close-btn {
-      text-decoration: none;
-      color: #3A91F0;
-      font-size: 12px;
-      font-weight: bold;
-      line-height: @close-btn-line-height;
+    .feedback {
+      .rating {
+        background-color: #FFEB83;
+        border-radius: 50px;
+        text-align: center;
+        line-height: 50px;
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        border: 1px solid #F3B15C;
+        font-size: 16px;
+        font-weight: bold;
+        color: rgba(26, 26, 26, 0.86);
+        box-shadow: 3px 3px 3px rgba(139, 139, 139, 0.51);
+      }
+      .rating-count {
+        .small-text;
+      }
     }
 
-    @media @screen-lg, @screen-md {
-      bottom: @close-btn-line-height + @lg-container-margin +
-      (@lg-container-margin / 2);
-    }
+    .price-container {
+      .price {
+        color: #292929;
+      }
 
-    @media @screen-sm {
-      bottom: @sm-container-margin;
-    }
-  }
-
-  .feedback {
-    .rating {
-      background-color: #FFEB83;
-      border-radius: 50px;
-      text-align: center;
-      line-height: 50px;
-      display: inline-block;
-      width: 50px;
-      height: 50px;
-      border: 1px solid #F3B15C;
-      font-size: 16px;
-      font-weight: bold;
-      color: rgba(26, 26, 26, 0.86);
-      box-shadow: 3px 3px 3px rgba(139, 139, 139, 0.51);
-    }
-    .rating-count {
-      .small-text;
+      .period {
+        .small-text;
+      }
     }
   }
 
-  .price-container {
-    .price {
-      color: #292929;
-    }
-
-    .period {
-      .small-text;
-    }
-  }
-
+  /* container for information listing and images */
   .container {
     position: absolute;
     height: auto;
@@ -185,33 +215,29 @@ h5 {
       right: @sm-container-margin;
     }
   }
-}
 
-@table-spacing: 8px;
+  /* container for the close button */
+  .close-container {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    height: @close-btn-line-height;
 
-.table {
-  height: 100%;
-  display: table;
-  border-spacing: @table-spacing;
-
-  .table-cell {
-    display: table-cell;
-    vertical-align: middle;
-
-    &:first-child {
-      margin-left: -@table-spacing;
+    .close-btn {
+      text-decoration: none;
+      color: #3A91F0;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: @close-btn-line-height;
     }
 
-    &:last-child {
-      margin-right: -@table-spacing;
+    @media @screen-lg, @screen-md {
+      bottom: @close-btn-line-height + @lg-container-margin +
+      (@lg-container-margin / 2);
+    }
+
+    @media @screen-sm {
+      bottom: @sm-container-margin;
     }
   }
-}
-
-.pull-right {
-  float: right;
-}
-
-.pull-left {
-  float: left;
 }

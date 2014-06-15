@@ -2,6 +2,9 @@ var Handlebars = require('handlebars/runtime').default;
 var settings = require('../settings');
 var $ = require('jquery');
 
+/*
+ * gets an optimized url for the photo
+ */
 Handlebars.registerHelper('photo_url', function(photo) {
   var viewportWidth = $(window).width();
 

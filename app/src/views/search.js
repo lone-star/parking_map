@@ -6,6 +6,9 @@ var _ = require('underscore');
  *
  * It needs a collection, and will call collection.search(queryString) when a
  * user is performing a search
+ *
+ * In order to offer additional autocomplete on the user queries, it uses the
+ * google maps autocomplete library
  */
 var SearchView = Backbone.View.extend({
   el: '#search',
@@ -13,8 +16,7 @@ var SearchView = Backbone.View.extend({
   initialize: function() {
     this.autocomplete = new google.maps.places.Autocomplete(this.$('#search-text')[0]);
 
-    google.maps.event.addListener(this.autocomplete, 'place_changed',
-                                  _.bind(this.newSearch, this));
+    google.maps.event.addListener(this.autocomplete, 'place_changed', _.bind(this.newSearch, this));
   },
 
   newSearch: function() {

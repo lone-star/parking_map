@@ -10,6 +10,10 @@ var settings = require('../settings.json');
  *    -select marker
  *
  * It interacts mostly with the Google Maps canevas
+ *
+ * It will also listens to the `locationSelected` event on `this.collection`.
+ * When no location is selected, it will be on "large" mode, when a location is
+ * selected it will be on "small" mode.
  */
 var MapView = Backbone.View.extend({
   el: '#map-canvas',
@@ -38,7 +42,9 @@ var MapView = Backbone.View.extend({
     this.collection.on('locationSelected', function(location) {
 
       if (this.isLargeMode) {
-        _.delay(_.bind(this.showRoute, this, location), 1000);
+        // We delay the resize in order to wait for the pannel opening to be
+        // complete
+        _.delay(_.bind(this.showRoute, this, location), settings.pannel_transition_duration);
       } else {
         this.showRoute.apply(this, arguments);
       }
@@ -48,6 +54,10 @@ var MapView = Backbone.View.extend({
     this.isLargeMode = true;
   },
 
+  /*
+   * Render all the map elements, and make sure they are visible
+   */
+
   render: function() {
     var bounds = new google.maps.LatLngBounds();
 
@@ -56,6 +66,10 @@ var MapView = Backbone.View.extend({
 
     this.map.fitBounds(bounds);
   },
+
+  /*
+   * shows all the locations on the map
+   */
 
   renderLocations: function(bounds) {
     if (this.markers && this.markers.length > 0) {
@@ -84,6 +98,10 @@ var MapView = Backbone.View.extend({
     }, this);
   },
 
+  /*
+   * shows the search result marker on the map
+   */
+
   renderSearch: function(bounds) {
     var searchCoords = this.collection.getCoordinates();
     var searchLatLng = new google.maps.LatLng(searchCoords.lat, searchCoords.lng);
@@ -101,6 +119,10 @@ var MapView = Backbone.View.extend({
 
     bounds.extend(searchLatLng);
   },
+
+  /*
+   * Shows a route from a given location to the location of the search result
+   */
 
   showRoute: function(location) {
     if (!location) {
@@ -123,6 +145,11 @@ var MapView = Backbone.View.extend({
 
     this.shrink();
   },
+
+  /*
+   * `this.shrink` and `this.expand` will resize the view element, and make sure
+   * the google maps api takes these modifications into account
+   */
 
   shrink: function() {
     if (!this.isLargeMode) {
