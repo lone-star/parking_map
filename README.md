@@ -49,6 +49,12 @@ A script watches modifications on js, less or hbs files. On every modification, 
 
 # The Client Application
 
+The client application consists of 4 modules:
+- LocationsCollection
+- SearchView
+- MapView
+- DetailsView
+
 
 
 
